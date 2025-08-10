@@ -6,6 +6,7 @@ PromptGen is a simple command-line tool written in Rust that helps you build mul
 
 - Interactive CLI that reads lines of text until you submit an empty line
 - Saves your prompt into a file called `my.prompt` in the current directory
+- **Tone analysis** (optional): Automatically detects the tone of your prompt (professional, casual, technical, creative, etc.) and can include it in the filename
 - Small codebase built with [`clap`](https://crates.io/crates/clap) for argument parsing and [`anyhow`](https://crates.io/crates/anyhow) for error handling
 
 ## Building and Running
@@ -32,7 +33,37 @@ Enter your prompt line by line. Press ENTER on an empty line to finish.
 Prompt saved to my.prompt
 ```
 
-The resulting `my.prompt` file will contain the text you entered.
+### Tone Analysis
+
+Use the `--tone` or `-t` flag to enable automatic tone detection:
+
+```bash
+cargo run -- --tone
+```
+
+When tone analysis is enabled, PromptGen will:
+1. Analyze your prompt for various tones (professional, casual, technical, creative, instructional, analytical, interrogative, urgent)
+2. Display the detected tones
+3. Ask if you want to include them in the filename
+4. Save to a descriptive filename like `my-technical-analytical.prompt` if you choose
+
+Example:
+```
+$ cargo run -- --tone
+Welcome to PromptGen!
+Enter your prompt line by line. Press ENTER on an empty line to finish.
+
+> Please analyze this algorithm and explain the implementation details.
+> Compare different approaches and provide recommendations.
+> 
+
+Detected tone(s): analytical, technical
+Would you like to add these tone labels to the filename? (y/n): y
+
+Prompt saved to my-analytical-technical.prompt
+```
+
+The resulting `my.prompt` file (or tone-labeled variant) will contain the text you entered.
 
 ## License
 
